@@ -1,4 +1,28 @@
 firebase.auth().onAuthStateChanged(async function(user) {
+  
+  if (user) {
+    // Signed in
+    console.log('signed in')
+    console.log(user) 
+
+    // Build the markup for the sign-out button and set the HTML in the header
+    document.querySelector(`.sign-in-or-sign-out`).innerHTML = `
+    <button class="text-pink-500 underline sign-out">Sign Out</button>
+    `
+
+    // get a reference to the sign out button
+    let signOutButton = document.querySelector(`.sign-out`)
+
+    // handle the sign out button click
+    signOutButton.addEventListener(`click`, function(event) {
+      // sign out of firebase authentication
+      firebase.auth().signOut()
+
+      // redirect to the home page
+      document.location.href = `index.html`
+    })
+
+  // Define url    
   let url = `http://data.nba.net/10s/prod/v1/2020/players.json`
   
   // - Fetch the url, wait for a response, store the response in memory
@@ -10,14 +34,13 @@ firebase.auth().onAuthStateChanged(async function(user) {
   // - Write the json-formatted data to the JavaScript console
   console.log(json)
 
-  window.addEventListener('DOMContentLoaded', async function() {
     // Get a reference to the "get stats" button
     let getStatsButton = document.querySelector(`.get-stats`)
   
     // When the "get stats" button is clicked:
     getStatsButton.addEventListener(`click`, async function(event) {
       // - Ignore the default behavior of the button
-      // event.preventDefault()
+      event.preventDefault()
   
       // - Get a reference to the element containing the user-entered first name
       let playerFirstInput = document.querySelector(`#playerFirstName`)
@@ -101,32 +124,33 @@ firebase.auth().onAuthStateChanged(async function(user) {
             // }
         // }
     })
-  })
 
-  if (user) {
-    // Signed in
-    console.log('signed in')
-    console.log(user)
 
-    
-    
+  // Save preferences for the logged-in user
 
-    // Build the markup for the sign-out button and set the HTML in the header
-    document.querySelector(`.sign-in-or-sign-out`).innerHTML = `
-    <button class="text-pink-500 underline sign-out">Sign Out</button>
-    `
+    // Get a reference to the checkboxes
+    let stat1Box = document.querySelector(`#stat1`)
+    let stat2Box = document.querySelector(`#stat2`)
 
-    // get a reference to the sign out button
-    let signOutButton = document.querySelector(`.sign-out`)
+    // Get a reference to the save button
+    let saveButton = document.querySelector(`#save-button`)
 
-    // handle the sign out button click
-    signOutButton.addEventListener(`click`, function(event) {
-      // sign out of firebase authentication
-      firebase.auth().signOut()
+    // Create an event listener for the save button
+    saveButton.addEventListener(`click`, async function(event) {
+      
+      // prevent default
+      event.preventDefault()
 
-      // redirect to the home page
-      document.location.href = `index.html`
+      // Build the URL for the save API (".checked" indicates whether a box is checked - true/false)
+      let url = `/.netlify/functions/save_preferences?stat1=${stat1Box.checked}&stat2=${stat2Box.checked}&userId=${user.uid}`
+
+      // Fetch the url, wait for a response, store the response in memory
+      let response = await fetch(url)
+
+      // refresh the page
+      location.reload()
     })
+
   } else {
     
     // Signed out
