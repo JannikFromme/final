@@ -125,12 +125,30 @@ firebase.auth().onAuthStateChanged(async function(user) {
         // }
     })
 
+  // Get the preferences for the logged-in user
+  
+    // Build the URL for the return API
+    let returnUrl = `/.netlify/functions/return_preferences?userId=${user.uid}`
 
-  // Save preferences for the logged-in user
+    // Fetch the url, wait for a response, store the response in memory
+    let returnResponse = await fetch(returnUrl)
+
+    // Ask for the json-formatted data from the response, wait for the data, store it in memory
+    let returnJson = await returnResponse.json()
 
     // Get a reference to the checkboxes
     let stat1Box = document.querySelector(`#stat1`)
     let stat2Box = document.querySelector(`#stat2`)
+
+    // Toggle checkboxes based on a user's saved preferences (i.e., only if user has saved preferences before)
+    // (stored as string in Firestore, therefore we must transform into boolean)
+    // if (returnJson[0])
+    if (returnJson[0] != null) {
+    stat1Box.checked = (returnJson[0].stat1 === 'true')
+    stat2Box.checked = (returnJson[0].stat2 === 'true')
+    }
+
+  // Save preferences for the logged-in user
 
     // Get a reference to the save button
     let saveButton = document.querySelector(`#save-button`)
@@ -142,10 +160,10 @@ firebase.auth().onAuthStateChanged(async function(user) {
       event.preventDefault()
 
       // Build the URL for the save API (".checked" indicates whether a box is checked - true/false)
-      let url = `/.netlify/functions/save_preferences?stat1=${stat1Box.checked}&stat2=${stat2Box.checked}&userId=${user.uid}`
+      let saveUrl = `/.netlify/functions/save_preferences?stat1=${stat1Box.checked}&stat2=${stat2Box.checked}&userId=${user.uid}`
 
       // Fetch the url, wait for a response, store the response in memory
-      let response = await fetch(url)
+      let saveResponse = await fetch(saveUrl)
 
       // refresh the page
       location.reload()
