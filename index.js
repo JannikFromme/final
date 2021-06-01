@@ -55,6 +55,18 @@ firebase.auth().onAuthStateChanged(async function(user) {
       let playerLast = playerLastInput.value
       console.log(`${playerFirst} ${playerLast}`)
 
+       // loop through database to find matching player name
+       for (let i = 0; i < json.league.standard.length; i++) {
+        if (playerFirst == json.league.standard[i].firstName && playerLast == json.league.standard[i].lastName) {
+          let playerId = json.league.standard[i].personId
+          console.log(playerId)
+          let url2 = `http://data.nba.net/data/10s/prod/v1/2020/players/${playerId}_profile.json`
+          let response2 = await fetch(url2)
+          let json2 = await response2.json()
+          console.log(json2)
+          console.log(json2.league.standard.stats.careerSummary.apg)
+        }
+      }
       // - Get a reference to the element containing the user-entered year
       // let yearInput = document.querySelector(`#year`)
 
