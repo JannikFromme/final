@@ -7,8 +7,14 @@ exports.handler = async function(event) {
 
   // get the querystring parameters and store in memory
   let userId = event.queryStringParameters.userId
-  let stat1 = event.queryStringParameters.stat1
-  let stat2 = event.queryStringParameters.stat2
+  let points = event.queryStringParameters.points
+  let assists = event.queryStringParameters.assists
+  let rebounds = event.queryStringParameters.rebounds
+  let steals = event.queryStringParameters.steals
+  let blocks = event.queryStringParameters.blocks
+  let fgp = event.queryStringParameters.fgp
+  let tpp = event.queryStringParameters.tpp
+  let ftp = event.queryStringParameters.ftp
 
   // establish a connection to firebase in memory
   let db = firebase.firestore()
@@ -16,8 +22,14 @@ exports.handler = async function(event) {
   // save preferences (create if user hasn't saved preferences before, otherwise update)
   await db.collection(`preferences`).doc(userId).set({
     userId: userId,
-    stat1: stat1,
-    stat2: stat2,
+    points: points,
+    assists: assists,
+    rebounds: rebounds,
+    steals: steals,
+    blocks: blocks,
+    fgp: fgp,
+    tpp: tpp,
+    ftp: ftp,
     updated: firebase.firestore.FieldValue.serverTimestamp()
   })
 

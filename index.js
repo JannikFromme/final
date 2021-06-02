@@ -55,6 +55,21 @@ firebase.auth().onAuthStateChanged(async function(user) {
       let playerLast = playerLastInput.value
       console.log(`${playerFirst} ${playerLast}`)
 
+      // Introduce player stats profile object
+      let playerCareerProfile = []
+
+      // Introduce season stats profile object
+      let playerProfile = {
+        points: [],
+        assists: [],
+        rebounds: [],
+        steals: [],
+        blocks: [],
+        fgp: [],
+        tpp: [],
+        ftp: []
+      }
+      
        // loop through database to find matching player name
        for (let i = 0; i < json.league.standard.length; i++) {
         if (playerFirst == json.league.standard[i].firstName && playerLast == json.league.standard[i].lastName) {
@@ -64,7 +79,79 @@ firebase.auth().onAuthStateChanged(async function(user) {
           let response2 = await fetch(url2)
           let json2 = await response2.json()
           console.log(json2)
-          console.log(json2.league.standard.stats.careerSummary.apg)
+
+          // Check for points check box being checked, if true display ppg for selected player
+          if (returnJson[0].points == `true`) {
+            playerCareerProfile.playerPoints = json2.league.standard.stats.careerSummary.ppg
+
+            for (let j = 0; j < json2.league.standard.stats.regularSeason.season.length; j++) {
+              let pointsData = json2.league.standard.stats.regularSeason.season[j].total.ppg
+              playerProfile.points.push(pointsData)
+            }
+          }
+
+          // check for assists check box being checked, if true display apg for selected player
+          if (returnJson[0].assists == `true`) {
+            playerCareerProfile.playerAssists = json2.league.standard.stats.careerSummary.apg
+            for (let j = 0; j < json2.league.standard.stats.regularSeason.season.length; j++) {
+              let assistsData = json2.league.standard.stats.regularSeason.season[j].total.apg
+              playerProfile.assists.push(assistsData)
+            }
+          }
+
+          // check for rebounds check box being checked, if true display rpg for selected player
+          if (returnJson[0].rebounds == `true`) {
+            playerCareerProfile.playerRebounds = json2.league.standard.stats.careerSummary.rpg
+            for (let j = 0; j < json2.league.standard.stats.regularSeason.season.length; j++) {
+              let reboundData = json2.league.standard.stats.regularSeason.season[j].total.rpg
+              playerProfile.rebounds.push(reboundData)
+            }
+          }
+
+          // check for steals check box being checked, if true display rpg for selected player
+          if (returnJson[0].steals == `true`) {
+            playerCareerProfile.playerSteals = json2.league.standard.stats.careerSummary.spg
+            for (let j = 0; j < json2.league.standard.stats.regularSeason.season.length; j++) {
+              let stealData = json2.league.standard.stats.regularSeason.season[j].total.spg
+              playerProfile.steals.push(stealData)
+            }
+          }
+
+          // check for blocks check box being checked, if true display rpg for selected player
+          if (returnJson[0].blocks == `true`) {
+            playerCareerProfile.playerBlocks = json2.league.standard.stats.careerSummary.bpg
+            for (let j = 0; j < json2.league.standard.stats.regularSeason.season.length; j++) {
+              let blockData = json2.league.standard.stats.regularSeason.season[j].total.bpg
+              playerProfile.blocks.push(blockData)
+            }
+          }
+
+          // check for fg% check box being checked, if true display fgp for selected player
+          if (returnJson[0].fgp == `true`) {
+            playerCareerProfile.playerFgp = json2.league.standard.stats.careerSummary.fgp
+            for (let j = 0; j < json2.league.standard.stats.regularSeason.season.length; j++) {
+              let fgpData = json2.league.standard.stats.regularSeason.season[j].total.fgp
+              playerProfile.fgp.push(fgpData)
+            }
+          }
+
+          // check for 3 pt% check box being checked, if true display tpp for selected player
+          if (returnJson[0].tpp == `true`) {
+            playerCareerProfile.playerTpp = json2.league.standard.stats.careerSummary.tpp
+            for (let j = 0; j < json2.league.standard.stats.regularSeason.season.length; j++) {
+              let tppData = json2.league.standard.stats.regularSeason.season[j].total.tpp
+              playerProfile.tpp.push(tppData)
+            }
+          }
+
+          // check for ft% check box being checked, if true display ftp for selected player
+          if (returnJson[0].ftp == `true`) {
+            playerCareerProfile.playerFtp = json2.league.standard.stats.careerSummary.ftp
+            for (let j = 0; j < json2.league.standard.stats.regularSeason.season.length; j++) {
+              let ftpData = json2.league.standard.stats.regularSeason.season[j].total.ftp
+              playerProfile.ftp.push(ftpData)
+            }
+          }
 
           //get reference to notes section
           let notes = document.querySelector(`#notes`)
@@ -127,75 +214,10 @@ firebase.auth().onAuthStateChanged(async function(user) {
           
         }
       }
-      // - Get a reference to the element containing the user-entered year
-      // let yearInput = document.querySelector(`#year`)
-
-      // - Get the user-entered days from the element's value
-      // let year = yearInput.value
-  
-      // - Check to see if the user entered anything; if so:
-      // if (playerFirst.length > 0 && playerLast.length > 0 && year.length > 0 ) {
-            
-            
-    
-            // - Store the returned location, current weather conditions, the forecast as three separate variables
-            // let interpretedLocation = json.location
-            // let currentWeather = json.current
-            // let dailyForecast = json.forecast.forecastday
-    
-            // Store a reference to the "current" element
-            // let currentElement = document.querySelector(`.current`)
-    
-            // Fill the current element with the location and current weather conditions
-            // currentElement.innerHTML = `
-            //     <div class="text-center space-y-2">
-            //         <div class="font-bold text-3xl">Current Weather for ${interpretedLocation.name}, ${interpretedLocation.region}</div>
-            //         <div class="font-bold">
-            //         <img src="https:${currentWeather.condition.icon}" class="inline-block">
-            //         <span class="temperature">${currentWeather.temp_f}</span>° 
-            //         and
-            //         <span class="conditions">${currentWeather.condition.text}</span>
-            //         </div>
-            //     </div>
-            // `
-            // Store a reference to the "forecast" element
-            // let enteredDays = document.querySelector(`.forecast`)
-
-            // Fill the entered days element with the user-entered days condition
-            // enteredDays.innerHTML = `
-            //     <div class="text-center space-y-8">
-            //     <div class="font-bold text-3xl">${days} Day Forecast</div>
-            // `
-            // if (days > 3) {
-            //     // Store a reference to the current element
-            //     let daysCheck = document.querySelector(`.current`)
-
-            //     // If days enterd is outside of conditions return error message
-            //     daysCheck.insertAdjacentHTML("beforebegin", `
-            //         <div class="text-center">
-            //             You are using the free weatherAPI.com version. Please enter a days value between 1 and 3 only!
-            //         </div>
-            //     `)
-            // }
-            // Loop through days entered to get forecast
-            // for (let i = 0; i < days; i++) {
-            //     // Create a variable to store each day in the forecast
-            //     let requestedForecast = dailyForecast[i]
-            //     // Store a reference to the "forecast" element
-            //     let forecast = document.querySelector(`.forecast`)
-
-            //     // Fill the entered forecast values based on user-entered days condition
-            //     forecast.insertAdjacentHTML(`beforeend`, `
-            //         <div class="text-center">
-            //             <img src="https:${requestedForecast.day.condition.icon}" class="mx-auto">
-            //             <h1 class="text-2xl text-bold text-gray-500">${requestedForecast.date}</h1>
-            //             <h2 class="text-xl">High ${requestedForecast.day.maxtemp_f}° – Low ${requestedForecast.day.mintemp_f}°</h2>
-            //             <p class="text-gray-500">${requestedForecast.day.condition.text}</h2>
-            //         </div>
-            //     `)
-            // }
-        // }
+      console.log(playerCareerProfile)
+      console.log(playerProfile)
     })
+    
 
   // Get the preferences for the logged-in user
   
@@ -209,16 +231,29 @@ firebase.auth().onAuthStateChanged(async function(user) {
     let returnJson = await returnResponse.json()
 
     // Get a reference to the checkboxes
-    let stat1Box = document.querySelector(`#stat1`)
-    let stat2Box = document.querySelector(`#stat2`)
+    let pointsBox = document.querySelector(`#points`)
+    let assistsBox = document.querySelector(`#assists`)
+    let reboundsBox = document.querySelector(`#rebounds`)
+    let stealsBox = document.querySelector(`#steals`)
+    let blocksBox = document.querySelector(`#blocks`)
+    let fgpBox = document.querySelector(`#fgp`)
+    let tppBox = document.querySelector(`#tpp`)
+    let ftpBox = document.querySelector(`#ftp`)
 
     // Toggle checkboxes based on a user's saved preferences (i.e., only if user has saved preferences before)
     // (stored as string in Firestore, therefore we must transform into boolean)
     // if (returnJson[0])
     if (returnJson[0] != null) {
-    stat1Box.checked = (returnJson[0].stat1 === 'true')
-    stat2Box.checked = (returnJson[0].stat2 === 'true')
+    pointsBox.checked = (returnJson[0].points === 'true')
+    assistsBox.checked = (returnJson[0].assists === 'true')
+    reboundsBox.checked = (returnJson[0].rebounds === 'true')
+    stealsBox.checked = (returnJson[0].steals === 'true')
+    blocksBox.checked = (returnJson[0].blocks === 'true')
+    fgpBox.checked = (returnJson[0].fgp === 'true')
+    tppBox.checked = (returnJson[0].tpp === 'true')
+    ftpBox.checked = (returnJson[0].ftp === 'true')
     }
+    console.log(returnJson)
 
   // Save preferences for the logged-in user
 
@@ -232,13 +267,13 @@ firebase.auth().onAuthStateChanged(async function(user) {
       event.preventDefault()
 
       // Build the URL for the save API (".checked" indicates whether a box is checked - true/false)
-      let saveUrl = `/.netlify/functions/save_preferences?stat1=${stat1Box.checked}&stat2=${stat2Box.checked}&userId=${user.uid}`
+      let saveUrl = `/.netlify/functions/save_preferences?points=${pointsBox.checked}&assists=${assistsBox.checked}&rebounds=${reboundsBox.checked}&steals=${stealsBox.checked}&blocks=${blocksBox.checked}&fgp=${fgpBox.checked}&tpp=${tppBox.checked}&ftp=${ftpBox.checked}&userId=${user.uid}`
 
       // Fetch the url, wait for a response, store the response in memory
       let saveResponse = await fetch(saveUrl)
 
       // // refresh the page
-      // location.reload()
+      location.reload()
     })
 
   } else {
