@@ -76,20 +76,55 @@ firebase.auth().onAuthStateChanged(async function(user) {
               <label class="block text-blue-300 py-2 font-bold mb-2">
                 Your Notes
               </label>
-            <textarea class="form-textarea mt-1 block w-full overflow-y-scroll h-32" 
+            <textarea id="textArea" class="form-textarea mt-1 block w-full overflow-y-scroll h-32" 
               placeholder="Record your thoughts on ${playerFirst} ${playerLast}."></textarea>
             </div>
 
             <div class="flex items-center justify-between pt-4">
               <button
+                id="saveNotesButton"
                 class="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                 type="button"
               >
-                Save notes
+                Save Notes
               </button>
             </div>
           </form>
           `
+          //get reference to newly created save button and the text area
+          let saveNotesButton = document.querySelector(`#saveNotesButton`)
+          let textArea = document.querySelector(`#textArea`)
+
+          //Load previously saved notes
+
+            // Build the URL for the return notes API
+            let returnNotesUrl = `/.netlify/functions/return_notes?userId=${user.uid}&playerId=${playerId}`
+
+            // Fetch the url, wait for a response, store the response in memory
+            let returnNotes = await fetch(returnNotesUrl)
+
+            // Ask for the json-formatted data from the response, wait for the data, store it in memory
+            let returnNotesJson = await returnNotes.json()
+
+            //set text area to previously saved notes (if user saved notes for this player before)
+            if (returnNotesJson[0] != null) {
+            textArea.innerHTML= returnNotesJson[0].body
+            }
+
+          //save notes' body when save button is clicked
+          saveNotesButton.addEventListener(`click`, async function(event) {
+              
+            // prevent default
+              event.preventDefault()
+
+            // Build the URL for the save API (".checked" indicates whether a box is checked - true/false)
+            let saveNotesUrl = `/.netlify/functions/save_notes?body=${textArea.value}&playerId=${playerId}&userId=${user.uid}`
+
+            //Fetch the url, wait for a response, store the response in memory
+            let saveResponse = await fetch(saveNotesUrl)
+
+          })
+          
         }
       }
       // - Get a reference to the element containing the user-entered year
@@ -202,8 +237,8 @@ firebase.auth().onAuthStateChanged(async function(user) {
       // Fetch the url, wait for a response, store the response in memory
       let saveResponse = await fetch(saveUrl)
 
-      // refresh the page
-      location.reload()
+      // // refresh the page
+      // location.reload()
     })
 
   } else {
