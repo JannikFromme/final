@@ -153,6 +153,115 @@ firebase.auth().onAuthStateChanged(async function(user) {
             }
           }
 
+          // Reference Stats Table
+          document.getElementById(`statsTable`).innerHTML=`<thead></thead><tbody></tbody>`
+
+          // Create Table Header
+          var statsTableHeaderRef = document.getElementById(`statsTable`).getElementsByTagName('thead')[0];
+          statsTableHeaderRef.classList.add("border-solid")
+          statsTableHeaderRef.classList.add("border-4")
+          statsTableHeaderRef.classList.add("border-light-blue-500")
+
+          let headerRow = statsTableHeaderRef.insertRow()
+          headerRow.style.fontSize = "16px"
+          headerRow.style.fontWeight = "bolder"
+          headerRow.style.columnGap = "50px"
+
+          // Add column for Season to table
+          headerRow.insertCell().appendChild(document.createTextNode(`Season`))
+
+          // Add columb for Points to table, if selected by user
+          if (playerProfile.points.length > 0) {
+            headerRow.insertCell().appendChild(document.createTextNode(`Points`))
+          }
+
+          // Add rest of stats to table, if selected by user
+          if (playerProfile.assists.length > 0) {
+            headerRow.insertCell().appendChild(document.createTextNode(`Assists`))
+          }
+
+          if (playerProfile.rebounds.length > 0) {
+            headerRow.insertCell().appendChild(document.createTextNode(`Rebounds`))
+          }
+
+          if (playerProfile.steals.length > 0) {
+            headerRow.insertCell().appendChild(document.createTextNode(`Steals`))
+          }
+
+          if (playerProfile.blocks.length > 0) {
+            headerRow.insertCell().appendChild(document.createTextNode(`Blocks`))
+          }
+
+          if (playerProfile.fgp.length > 0) {
+            headerRow.insertCell().appendChild(document.createTextNode(`FG %`))
+          }
+
+          if (playerProfile.tpp.length > 0) {
+            headerRow.insertCell().appendChild(document.createTextNode(`3P %`))
+          }
+
+          if (playerProfile.ftp.length > 0) {
+            headerRow.insertCell().appendChild(document.createTextNode(`FT %`))
+          }
+
+          // Add body to table
+          var statsTableBodyRef = document.getElementById(`statsTable`).getElementsByTagName('tbody')[0];
+
+          // function for rows
+          for (let y = 0; y < json2.league.standard.stats.regularSeason.season.length; y++){
+            let row = statsTableBodyRef.insertRow()
+            row.classList.add("border-solid")
+            row.classList.add("border-2")
+            row.classList.add("border-light-blue-500")
+            
+
+            // season years
+            let seasonCell = row.insertCell()
+            seasonCell.style.fontWeight = "bold"
+            seasonCell.appendChild(document.createTextNode(`${2021-(y+1)}-${2021-y}`))
+
+            let pointsCell = playerProfile.points[y]
+            if (pointsCell != null) {
+              row.insertCell().appendChild(document.createTextNode(pointsCell))
+            }
+
+            let assistsCell = playerProfile.assists[y]
+            if (assistsCell != null) {
+              row.insertCell().appendChild(document.createTextNode(assistsCell))
+            }
+
+            let reboundsCell = playerProfile.rebounds[y]
+            if (reboundsCell != null) {
+              row.insertCell().appendChild(document.createTextNode(reboundsCell))
+            }
+
+            let stealsCell = playerProfile.steals[y]
+            if (stealsCell != null) {
+              row.insertCell().appendChild(document.createTextNode(stealsCell))
+            }
+
+            let blocksCell = playerProfile.blocks[y]
+            if (blocksCell != null) {
+              row.insertCell().appendChild(document.createTextNode(blocksCell))
+            }
+
+            let fgpCell = playerProfile.fgp[y]
+            if (fgpCell != null) {
+              row.insertCell().appendChild(document.createTextNode(fgpCell))
+            }
+
+            let tppCell = playerProfile.tpp[y]
+            if (tppCell != null) {
+              row.insertCell().appendChild(document.createTextNode(tppCell))
+            }
+
+            let ftpCell = playerProfile.ftp[y]
+            if (ftpCell != null) {
+              row.insertCell().appendChild(document.createTextNode(ftpCell))
+            }
+
+          }
+
           //get reference to notes section
           let notes = document.querySelector(`#notes`)
 
