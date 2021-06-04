@@ -46,49 +46,47 @@
   </div>
 
   <!-- Form -->
-<div class="pl-8 space-y-2">
-  <div class="my-6">
+<div class="pl-8 pb-4 md:flex flex-row space-y-3 py-4">
       <form>
-        <input type="text" name="playerFirstName" id="playerFirstName" placeholder="Player's First Name" class="border border-gray-400 rounded p-2 mr-1">
-        <input type="text" name="playerLastName" id="playerLastName" placeholder="Player's Last Name" class="border border-gray-400 rounded p-2 mr-1">
-        <button class="get-stats border bg-blue-500 text-white rounded px-4 py-2">Get Stats</button>
+        <input type="text" name="playerFirstName" id="playerFirstName" placeholder="Player's First Name" class="inline-flex border border-gray-400 rounded p-2 mr-1 mt-3">
+        <input type="text" name="playerLastName" id="playerLastName" placeholder="Player's Last Name" class="inline-flex border border-gray-400 rounded p-2 mr-1 mt-3">
       </form>
-  </div>
+      <button class="get-stats border bg-blue-500 text-white rounded px-4 py-2 md:ml-1">Get Stats</button>
   </div>
 
   <!-- Checkboxes -->
-    <div class="pl-8 pb-4 flex flex-row space-x-6">
-        <label id="stat1Shell" class="inline-flex items-center mt-3">
+    <div class="pl-8 pb-4 md:flex flex-row md:space-x-6">
+        <label id="stat1Shell" class="inline-flex items-left mt-3">
             <input type="checkbox" id="points" class="form-checkbox h-5 w-5">
             <span class="ml-2 text-gray-700">Points</span>
         </label>
 
-        <label id="stat2Shell" class="inline-flex items-center mt-3">
+        <label id="stat2Shell" class="inline-flex items-left mt-3">
             <input type="checkbox" id="assists" class="form-checkbox h-5 w-5">
             <span class="ml-2 text-gray-700">Assists</span>
         </label>
 
-        <label id="stat3Shell" class="inline-flex items-center mt-3">
+        <label id="stat3Shell" class="inline-flex items-left mt-3">
           <input type="checkbox" id="rebounds" class="form-checkbox h-5 w-5">
           <span class="ml-2 text-gray-700">Rebounds</span>
         </label>
 
-        <label id="stat4Shell" class="inline-flex items-center mt-3">
+        <label id="stat4Shell" class="inline-flex items-left mt-3">
           <input type="checkbox" id="steals" class="form-checkbox h-5 w-5">
           <span class="ml-2 text-gray-700">Steals</span>
         </label>
 
-        <label id="stat5Shell" class="inline-flex items-center mt-3">
+        <label id="stat5Shell" class="inline-flex items-left mt-3">
           <input type="checkbox" id="blocks" class="form-checkbox h-5 w-5">
           <span class="ml-2 text-gray-700">Blocks</span>
         </label>
 
-        <label id="stat6Shell" class="inline-flex items-center mt-3">
+        <label id="stat6Shell" class="inline-flex items-left mt-3">
           <input type="checkbox" id="fgp" class="form-checkbox h-5 w-5">
           <span class="ml-2 text-gray-700">FG %</span>
         </label>
 
-        <label id="stat7Shell" class="inline-flex items-center mt-3">
+        <label id="stat7Shell" class="inline-flex items-left mt-3">
           <input type="checkbox" id="tpp" class="form-checkbox h-5 w-5">
           <span class="ml-2 text-gray-700">3P %</span>
         </label>
@@ -106,26 +104,15 @@
 </div>
 
 <!-- Create stats table -->
-<div class="pl-8 pb-8">
-  <table id="statsTable" class="w-5/6 border-solid border-4 border-light-blue-500">
+<div class="pl-8 pb-8 overflow-auto">
+  <table id="statsTable" class="w-5/6 border-solid border-4 border-light-blue-500 text-xs md:text-base">
   </table>
 </div>
 
 
 <!-- Notes placeholder -->
 <div id="notes">
-  <div class="pl-8 pb-2 w-5/6">
-  </label>
-<textarea id="textArea" class="p-1 form-textarea mt-1 block w-full overflow-y-scroll h-32 border-solid border-4" 
-  placeholder="Enter player notes"></textarea>
-</div>
 
-<div class="flex items-center justify-between pt-2">
-  <div class="pl-8">
-  <button id="saveNotesButton"
-    class="bg-blue-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Save Notes</button>
-</div>
-</form>
 </div>
 
 </body>

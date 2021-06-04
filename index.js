@@ -41,9 +41,10 @@ firebase.auth().onAuthStateChanged(async function(user) {
   
     // When the "get stats" button is clicked:
     getStatsButton.addEventListener(`click`, async function(event) {
+
       // - Ignore the default behavior of the button
       event.preventDefault()
-  
+
       // - Get a reference to the element containing the user-entered first name
       let playerFirstInput = document.querySelector(`#playerFirstName`)
       
@@ -62,6 +63,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
 
       // Introduce season stats profile object
       let playerProfile = {
+        playerId: "",
         points: [],
         assists: [],
         rebounds: [],
@@ -71,12 +73,13 @@ firebase.auth().onAuthStateChanged(async function(user) {
         tpp: [],
         ftp: []
       }
-      
+
        // loop through database to find matching player name
        for (let i = 0; i < json.league.standard.length; i++) {
         if (playerFirst == json.league.standard[i].firstName && playerLast == json.league.standard[i].lastName) {
           let playerId = json.league.standard[i].personId
-          console.log(playerId)
+          playerProfile.playerId = playerId
+          console.log(playerProfile.playerId)
           let url2 = `http://data.nba.net/data/10s/prod/v1/2020/players/${playerId}_profile.json`
           let response2 = await fetch(url2)
           let json2 = await response2.json()
@@ -165,44 +168,44 @@ firebase.auth().onAuthStateChanged(async function(user) {
           statsTableHeaderRef.classList.add("border-light-blue-500")
 
           let headerRow = statsTableHeaderRef.insertRow()
-          headerRow.style.fontSize = "16px"
+          // headerRow.style.fontSize = "12px md:16px"
           headerRow.style.fontWeight = "bolder"
 
           // Add column for Season to table
           headerRow.insertCell().appendChild(document.createTextNode(`Season`))
 
-          // Add columb for Points to table, if selected by user
+          // Add column for Points to table, if selected by user
           if (playerProfile.points.length > 0) {
-            headerRow.insertCell().appendChild(document.createTextNode(`Points`))
+            headerRow.insertCell().appendChild(document.createTextNode(`PTS`))
           }
 
           // Add rest of stats to table, if selected by user
           if (playerProfile.assists.length > 0) {
-            headerRow.insertCell().appendChild(document.createTextNode(`Assists`))
+            headerRow.insertCell().appendChild(document.createTextNode(`AST`))
           }
 
           if (playerProfile.rebounds.length > 0) {
-            headerRow.insertCell().appendChild(document.createTextNode(`Rebounds`))
+            headerRow.insertCell().appendChild(document.createTextNode(`REB`))
           }
 
           if (playerProfile.steals.length > 0) {
-            headerRow.insertCell().appendChild(document.createTextNode(`Steals`))
+            headerRow.insertCell().appendChild(document.createTextNode(`STL`))
           }
 
           if (playerProfile.blocks.length > 0) {
-            headerRow.insertCell().appendChild(document.createTextNode(`Blocks`))
+            headerRow.insertCell().appendChild(document.createTextNode(`BLK`))
           }
 
           if (playerProfile.fgp.length > 0) {
-            headerRow.insertCell().appendChild(document.createTextNode(`FG %`))
+            headerRow.insertCell().appendChild(document.createTextNode(`FG%`))
           }
 
           if (playerProfile.tpp.length > 0) {
-            headerRow.insertCell().appendChild(document.createTextNode(`3P %`))
+            headerRow.insertCell().appendChild(document.createTextNode(`3P%`))
           }
 
           if (playerProfile.ftp.length > 0) {
-            headerRow.insertCell().appendChild(document.createTextNode(`FT %`))
+            headerRow.insertCell().appendChild(document.createTextNode(`FT%`))
           }
 
           // Add body to table
@@ -266,6 +269,19 @@ firebase.auth().onAuthStateChanged(async function(user) {
           //get reference to notes section
           let notes = document.querySelector(`#notes`)
 
+          //inser notes section
+          notes.innerHTML=`
+          <div class="pl-8 pb-2 w-5/6">
+          <textarea id="textArea" class="p-1 form-textarea mt-1 block w-full overflow-y-scroll h-32 border-solid border-4" 
+          placeholder="Enter player notes"></textarea>
+          </div>
+          
+          <div class="flex items-center justify-between pt-2">
+            <div class="pl-8">
+            <button id="saveNotesButton"
+              class="bg-blue-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Save Notes</button>
+          </div>`
+
         
           //get reference to newly created save button and the text area
           let saveNotesButton = document.querySelector(`#saveNotesButton`)
@@ -304,8 +320,13 @@ firebase.auth().onAuthStateChanged(async function(user) {
         }
       }
       console.log(playerCareerProfile)
-      console.log(playerProfile)
+      console.log(playerProfile.playerId.length)
+      if(playerProfile.playerId.length <  1){
+       alert(`No player found. Please ensure correct spelling and capitalization.`)
+      }
+
     })
+
     
 
   // Get the preferences for the logged-in user
