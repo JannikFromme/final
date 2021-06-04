@@ -40,27 +40,24 @@
   <div>
     <h1 class="text-xl bg-black py-4 px-8">
       <a href="index.html" class="mx-auto container">
-        <span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-500">NBA Stats</span>
+        <span class="font-bold bg-clip-text text-transparent bg-blue-500">NBA Stats</span>
       </a>
     </h1>
   </div>
 
   <!-- Form -->
-<div class="p-8 space-y-8">
-  <div class="my-16">
-    <div class="text-center">
+<div class="pl-8 space-y-2">
+  <div class="my-6">
       <form>
         <input type="text" name="playerFirstName" id="playerFirstName" placeholder="Player's First Name" class="border border-gray-400 rounded p-2 mr-1">
         <input type="text" name="playerLastName" id="playerLastName" placeholder="Player's Last Name" class="border border-gray-400 rounded p-2 mr-1">
-        <!-- <input type="text" name="year" id="year" placeholder="Year" class="border border-gray-400 rounded w-16 p-2 mr-1"> -->
-        <button class="get-stats border bg-green-500 text-white rounded px-4 py-2">Get Stats!</button>
+        <button class="get-stats border bg-blue-500 text-white rounded px-4 py-2">Get Stats</button>
       </form>
-    </div>
+  </div>
   </div>
 
   <!-- Checkboxes -->
-  <div class="flex flex-col items-left px-8">
-    <div class="flex flex-col ">
+    <div class="pl-8 pb-4 flex flex-row space-x-6">
         <label id="stat1Shell" class="inline-flex items-center mt-3">
             <input type="checkbox" id="points" class="form-checkbox h-5 w-5">
             <span class="ml-2 text-gray-700">Points</span>
@@ -104,15 +101,32 @@
 </div>
 
 <!-- Button to save preferences -->
-<button id="save-button" class="mt-10 ml-2 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-xl">Save Preferences</button>
+<div class="pl-8 pb-8">
+  <button id="save-button" class="bg-blue-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Save Stat Selections</button>
+</div>
 
 <!-- Create stats table -->
-<table id="statsTable" class="w-3/4 border-solid border-4 border-light-blue-500">
+<div class="pl-8 pb-8">
+  <table id="statsTable" class="w-5/6 border-solid border-4 border-light-blue-500">
   </table>
+</div>
 
 
 <!-- Notes placeholder -->
-<div id="notes"> </div>
+<div id="notes">
+  <div class="pl-8 pb-2 w-5/6">
+  </label>
+<textarea id="textArea" class="p-1 form-textarea mt-1 block w-full overflow-y-scroll h-32 border-solid border-4" 
+  placeholder="Enter player notes"></textarea>
+</div>
+
+<div class="flex items-center justify-between pt-2">
+  <div class="pl-8">
+  <button id="saveNotesButton"
+    class="bg-blue-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Save Notes</button>
+</div>
+</form>
+</div>
 
 </body>
 

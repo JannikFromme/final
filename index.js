@@ -7,7 +7,9 @@ firebase.auth().onAuthStateChanged(async function(user) {
 
     // Build the markup for the sign-out button and set the HTML in the header
     document.querySelector(`.sign-in-or-sign-out`).innerHTML = `
-    <button class="text-pink-500 underline sign-out">Sign Out</button>
+      <div class="text-right">
+        <button class="pr-8  text-blue-500 underline sign-out">Sign Out</button>
+      </div>
     `
 
     // get a reference to the sign out button
@@ -165,7 +167,6 @@ firebase.auth().onAuthStateChanged(async function(user) {
           let headerRow = statsTableHeaderRef.insertRow()
           headerRow.style.fontSize = "16px"
           headerRow.style.fontWeight = "bolder"
-          headerRow.style.columnGap = "50px"
 
           // Add column for Season to table
           headerRow.insertCell().appendChild(document.createTextNode(`Season`))
@@ -265,28 +266,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
           //get reference to notes section
           let notes = document.querySelector(`#notes`)
 
-          //insert html for notes section
-          notes.innerHTML =`
-          <form class="bg-gray-900 opacity-75 w-1/2 shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
-            <div class="mb-4">
-              <label class="block text-blue-300 py-2 font-bold mb-2">
-                Your Notes
-              </label>
-            <textarea id="textArea" class="form-textarea mt-1 block w-full overflow-y-scroll h-32" 
-              placeholder="Record your thoughts on ${playerFirst} ${playerLast}."></textarea>
-            </div>
-
-            <div class="flex items-center justify-between pt-4">
-              <button
-                id="saveNotesButton"
-                class="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
-                type="button"
-              >
-                Save Notes
-              </button>
-            </div>
-          </form>
-          `
+        
           //get reference to newly created save button and the text area
           let saveNotesButton = document.querySelector(`#saveNotesButton`)
           let textArea = document.querySelector(`#textArea`)
