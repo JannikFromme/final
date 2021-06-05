@@ -271,7 +271,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
 
           //inser notes section
           notes.innerHTML=`
-          <div class="pl-8 pb-2 w-5/6">
+          <div class="pb-2 w-5/6">
           <textarea id="textArea" class="p-1 form-textarea mt-1 block w-full overflow-y-scroll h-32 border-solid border-4" 
           placeholder="Enter player notes"></textarea>
           </div>

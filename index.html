@@ -45,7 +45,7 @@
     </h1>
   </div>
 
-  <!--  -->
+  <!-- Direction for Search -->
   <div class="text pl-8 pt-8">
     <span class=> Search for any active NBA player by entering his full name below. 
       Please ensure correct spelling and capitalization.</span>
@@ -53,7 +53,7 @@
   <!-- Form -->
 <div class="space-y-2">
   <div class="my-6">
-<div class="pl-8 pb-4 md:flex flex-row space-y-3 py-4">
+<div class="pb-4 md:flex flex-row space-y-3">
       <form>
         <input type="text" name="playerFirstName" id="playerFirstName" placeholder="Player's First Name" class="inline-flex border border-gray-400 rounded p-2 mr-1 mt-3">
         <input type="text" name="playerLastName" id="playerLastName" placeholder="Player's Last Name" class="inline-flex border border-gray-400 rounded p-2 mr-1 mt-3">
@@ -64,7 +64,7 @@
   <!-- Checkboxes -->
     <div class="pb-4 flex flex-row space-x-6">
         <label id="stat1Shell" class="inline-flex items-center mt-3">
-    <div class="pl-8 pb-4 md:flex flex-row md:space-x-6">
+    <div class="pb-4 md:flex flex-row md:space-x-6">
         <label id="stat1Shell" class="inline-flex items-left mt-3">
             <input type="checkbox" id="points" class="form-checkbox h-5 w-5">
             <span class="ml-2 text-gray-700">Points</span>
@@ -108,12 +108,12 @@
 </div>
 
 <!-- Button to save preferences -->
-<div class="pl-8 pb-8">
+<div class="pb-8">
   <button id="save-button" class="bg-blue-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Save Stat Selections</button>
 </div>
 
 <!-- Create stats table -->
-<div class="pl-8 pb-8 overflow-auto">
+<div class="pb-8 overflow-auto">
   <table id="statsTable" class="w-5/6 border-solid border-4 border-light-blue-500 text-xs md:text-base">
   </table>
 </div>
