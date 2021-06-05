@@ -3,7 +3,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
   if (user) {
     // Signed in
     console.log('signed in')
-    console.log(user) 
+    console.log(user)
 
     // Build the markup for the sign-out button and set the HTML in the header
     document.querySelector(`.sign-in-or-sign-out`).innerHTML = `
